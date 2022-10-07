@@ -1,6 +1,7 @@
 package app
 
-type Attende struct {
+
+type Attendee struct {
 	ID       string `json:"id"`
 	Username string `json:"username" validate:"gte=3 & lte=25 & format=alnum_unicode"`
 	Email    string `json:"email" validate:"empty=false | format=email"`
@@ -9,14 +10,14 @@ type Attende struct {
 }
 
 type Event struct {
-	ID        string    `json:"id"`
-	Title     string    `json:"title" validate:"gte=3 & lte=25 & format=alnum_unicode"`
-	Location  string    `json:"location" `
-	Latitude  string    `json:"latitude"`
-	Longitude string    `json:"longitude"`
-	Start     int64     `json:"start"`
-	End       int64     `json:"end"`
-	Attendes  []Attende `json:"attendes"`
+	ID        string     `json:"id"`
+	Title     string     `json:"title" validate:"gte=3 & lte=25 & format=alnum_unicode"`
+	Location  string     `json:"location" `
+	Latitude  string     `json:"latitude"`
+	Longitude string     `json:"longitude"`
+	Start     int64      `json:"start"`
+	End       int64      `json:"end"`
+	Attendes  []Attendee `json:"attendes"`
 }
 
 type Ticket struct {
