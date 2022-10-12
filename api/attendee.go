@@ -1,8 +1,9 @@
 package api
 
 import (
-	"go-joint/app"
 	"net/http"
+
+	"github.com/AntonyIS/go-joint/app"
 
 	"github.com/gin-gonic/gin"
 )

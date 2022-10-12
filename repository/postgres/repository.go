@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"go-joint/app"
-	"go-joint/config"
+	"github.com/AntonyIS/go-joint/app"
+	"github.com/AntonyIS/go-joint/config"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -39,7 +39,7 @@ type attendeeRepo struct {
 	client *gorm.DB
 }
 
-func NewPostgreSQLClient() (app.AttendeeRepository, error) {
+func NewAttendeeRepository() (app.AttendeeRepository, error) {
 	repo := attendeeRepo{}
 	client, err := postgresClient()
 	if err != nil {
