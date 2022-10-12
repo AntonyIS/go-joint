@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	"go-joint/app"
+	"github.com/AntonyIS/go-joint/app"
 
 	"github.com/gin-gonic/gin"
 )
