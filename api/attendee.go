@@ -44,9 +44,10 @@ func (h attendeeHandler) Post(c *gin.Context) {
 func (h attendeeHandler) Get(c *gin.Context) {
 	id := c.Param("id")
 	attendee, err := h.attendeeService.Read(id)
+
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err,
+			"error": err.Error(),
 		})
 		return
 	}

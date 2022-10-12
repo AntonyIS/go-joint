@@ -1,26 +1,26 @@
-package postgres
+package repository
 
 import (
-	"errors"
 	"fmt"
 
 	"github.com/AntonyIS/go-joint/app"
 	"github.com/AntonyIS/go-joint/config"
+	"github.com/pkg/errors"
 
 	"github.com/jinzhu/gorm"
-	"gorm.io/driver/postgres"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 func postgresClient() (*gorm.DB, error) {
 	var (
 		host     = config.GetEnvVariable("HOST")
 		port     = config.GetEnvVariable("PORT")
-		user     = config.GetEnvVariable("USER")
+		user     = "postgres" //config.GetEnvVariable("USER")
 		dbname   = config.GetEnvVariable("DBNAME")
 		password = config.GetEnvVariable("PASSWORD")
 	)
 
-	conn := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disbale",
+	conn := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable",
 		host,
 		port,
 		user,
@@ -28,7 +28,7 @@ func postgresClient() (*gorm.DB, error) {
 		password,
 	)
 
-	db, err := gorm.Open(postgres.Open(conn), &gorm.Config{})
+	db, err := gorm.Open("postgres", conn)
 	if err != nil {
 		return nil, err
 	}
@@ -46,6 +46,7 @@ func NewAttendeeRepository() (app.AttendeeRepository, error) {
 		return nil, err
 	}
 	repo.client = client
+	repo.client.AutoMigrate(&app.Attendee{})
 	return repo, nil
 }
 
@@ -77,13 +78,17 @@ func (repo attendeeRepo) ReadAll() ([]*app.Attendee, error) {
 }
 
 func (repo attendeeRepo) Update(attendee *app.Attendee) (*app.Attendee, error) {
-	var updateAttendee *app.Attendee
-	res := repo.client.Model(updateAttendee).Where("id = ?", attendee.ID).Updates(attendee)
+	var updateAttendee app.Attendee
+	res := repo.client.First(&updateAttendee, "id = ?", attendee.ID)
+	if res.RowsAffected == 0 {
+		return nil, errors.Wrap(app.ErrInternalServer, res.Error.Error())
+	}
+	res = repo.client.Model(updateAttendee).Where("id = ?", attendee.ID).Updates(attendee)
 
 	if res.RowsAffected == 0 {
-		return nil, errors.New("attendee not updated")
+		return nil, errors.Wrap(app.ErrInternalServer, res.Error.Error())
 	}
-	return updateAttendee, nil
+	return attendee, nil
 }
 
 func (repo attendeeRepo) Delete(id string) error {

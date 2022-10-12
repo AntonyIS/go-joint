@@ -5,6 +5,7 @@ import "errors"
 var (
 	ErrItemNotFound = errors.New("item not found")
 	ErrInvalidItem  = errors.New("item not valid")
+	ErrInternalServer  = errors.New("internal server error")
 )
 
 type attendeeService struct {

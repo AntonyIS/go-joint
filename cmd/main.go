@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/AntonyIS/go-joint/api"
@@ -12,7 +13,10 @@ import (
 
 func main() {
 	// Get Attendee repository
-	repo := repository.NewAttendeeRepository()
+	repo, err := repository.NewAttendeeRepository()
+	if err != nil {
+		log.Fatal(err)
+	}
 	// Get attendee service
 	srv := app.AttendeeService(repo)
 	// Get Attendee handler
@@ -24,9 +28,9 @@ func main() {
 	// Attendee Handler
 	router.GET("/attendees", attendeeHandler.GetAll)
 	router.GET("/attendees/:id", attendeeHandler.Get)
-	router.GET("/attendees/", attendeeHandler.Post)
-	router.GET("/attendees/:id", attendeeHandler.Put)
-	router.GET("/attendees/:id", attendeeHandler.Delete)
+	router.POST("/attendees/", attendeeHandler.Post)
+	router.PUT("/attendees/:id", attendeeHandler.Put)
+	router.DELETE("/attendees/:id", attendeeHandler.Delete)
 
 	router.Run(":8080")
 
