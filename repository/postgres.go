@@ -15,7 +15,7 @@ func postgresClient() (*gorm.DB, error) {
 	var (
 		host     = config.GetEnvVariable("HOST")
 		port     = config.GetEnvVariable("PORT")
-		user     = "postgres" //config.GetEnvVariable("USER")
+		user     = config.GetEnvVariable("DBUSER")
 		dbname   = config.GetEnvVariable("DBNAME")
 		password = config.GetEnvVariable("PASSWORD")
 	)
