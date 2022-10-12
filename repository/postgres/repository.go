@@ -4,11 +4,11 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/AntonyIS/go-joint/app"
-	"github.com/AntonyIS/go-joint/config"
+	"go-joint/app"
+	"go-joint/config"
 
+	"github.com/jinzhu/gorm"
 	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 )
 
 func postgresClient() (*gorm.DB, error) {

@@ -3,9 +3,9 @@ package main
 import (
 	"net/http"
 
-	h "github.com/AntonyIS/go-joint/api"
-	"github.com/AntonyIS/go-joint/app"
-	repo "github.com/AntonyIS/go-joint/repository"
+	h "go-joint/api"
+	"go-joint/app"
+	repo "go-joint/repository"
 
 	"github.com/gin-gonic/gin"
 )
