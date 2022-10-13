@@ -7,6 +7,7 @@ import (
 	"github.com/AntonyIS/go-joint/config"
 	"github.com/pkg/errors"
 
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -51,6 +52,7 @@ func NewAttendeeRepository() (app.AttendeeRepository, error) {
 }
 
 func (repo attendeeRepo) Create(attendee *app.Attendee) (*app.Attendee, error) {
+	attendee.ID = uuid.New().String()
 	res := repo.client.Create(&attendee)
 	if res.RowsAffected == 0 {
 		return nil, errors.New("attendee not created")
@@ -83,6 +85,7 @@ func (repo attendeeRepo) Update(attendee *app.Attendee) (*app.Attendee, error) {
 	if res.RowsAffected == 0 {
 		return nil, errors.Wrap(app.ErrInternalServer, res.Error.Error())
 	}
+
 	res = repo.client.Model(updateAttendee).Where("id = ?", attendee.ID).Updates(attendee)
 
 	if res.RowsAffected == 0 {

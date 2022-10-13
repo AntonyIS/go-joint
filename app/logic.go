@@ -1,11 +1,15 @@
 package app
 
-import "errors"
+import (
+	"errors"
+
+
+)
 
 var (
-	ErrItemNotFound = errors.New("item not found")
-	ErrInvalidItem  = errors.New("item not valid")
-	ErrInternalServer  = errors.New("internal server error")
+	ErrItemNotFound   = errors.New("item not found")
+	ErrInvalidItem    = errors.New("item not valid")
+	ErrInternalServer = errors.New("internal server error")
 )
 
 type attendeeService struct {
@@ -37,6 +41,7 @@ func NewTicketService(ticketRepo TicketRepository) TicketService {
 
 // Attendee Repository
 func (s attendeeService) Create(attendee *Attendee) (*Attendee, error) {
+	
 	return s.attendeeRepo.Create(attendee)
 }
 func (s attendeeService) Read(id string) (*Attendee, error) {

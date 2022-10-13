@@ -69,6 +69,7 @@ func (h attendeeHandler) Put(c *gin.Context) {
 	var attendee app.Attendee
 
 	if err := c.ShouldBindJSON(&attendee); err != nil {
+
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err,
 		})
