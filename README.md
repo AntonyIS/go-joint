@@ -14,8 +14,8 @@ This is a Go conference application used to post Go events for Gophers. This app
 
 ## Installation
 * Clone the application : $ git clone https://github.com/AntonyIS/go-joint.git
-* Create docker image : docker build -t go-con:latest .
-* Run application : docker-compose up --build
+* Create docker image : $ docker build -t go-con:latest .
+* Run application : $ docker-compose up --build
 
 
 
