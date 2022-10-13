@@ -1,0 +1,44 @@
+version : '3'
+services:
+  app:
+    container_name: go-joint
+    build: .
+    ports:
+      - 8080:8080
+    networks:
+      - go-joint-net
+    restart: on-failure
+    volumes:
+      - .:/app
+    depends_on:
+      - postgresdb
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - DATABASE_HOST=${DB_HOST}
+      - DATABASE_PORT=${DB_PORT}
+
+  postgresdb:
+    image: postgres:latest
+    container_name: postgresdb
+    ports:
+      - 5432:5432
+    networks:
+      - go-joint-net
+    volumes:
+      - database_postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - DATABASE_HOST=${DB_HOST}
+
+volumes:
+  app:
+  database_postgres: 
+
+networks:
+  go-joint-net:
+    driver: bridge
+

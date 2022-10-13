@@ -14,11 +14,11 @@ import (
 
 func postgresClient() (*gorm.DB, error) {
 	var (
-		host     = config.GetEnvVariable("HOST")
-		port     = config.GetEnvVariable("PORT")
-		user     = config.GetEnvVariable("DBUSER")
-		dbname   = config.GetEnvVariable("DBNAME")
-		password = config.GetEnvVariable("PASSWORD")
+		host     = config.GetEnvVariable("DB_HOST")
+		port     = config.GetEnvVariable("DB_PORT")
+		user     = config.GetEnvVariable("DB_USER")
+		dbname   = config.GetEnvVariable("DB_NAME")
+		password = config.GetEnvVariable("DB_PASSWORD")
 	)
 
 	conn := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable",
